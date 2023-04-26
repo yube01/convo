@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-
+import { MdOutlineAddPhotoAlternate } from "react-icons/md";
+import "../style.scss";
 const Register = () => {
   return (
     <div className="formContainer">
@@ -12,7 +13,9 @@ const Register = () => {
           <input required type="password" placeholder="password" />
           <input required style={{ display: "none" }} type="file" id="file" />
           <label htmlFor="file">
-            <img src="" alt="" />
+            <div className="imgs">
+              <MdOutlineAddPhotoAlternate />
+            </div>
             <span>Add an avatar</span>
           </label>
           <button>Sign up</button>
