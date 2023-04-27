@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
-import "../style.scss";
+
 const Register = () => {
   return (
     <div className="formContainer">

@@ -4,8 +4,8 @@ const Chats = () => {
       <div className="userChat">
         <img alt="" />
         <div className="userChatInfo">
-          <span></span>
-          <p></p>
+          <span>User</span>
+          <p>Hey</p>
         </div>
       </div>
     </div>
