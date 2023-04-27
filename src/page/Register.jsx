@@ -2,12 +2,17 @@ import { Link } from "react-router-dom";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 
 const Register = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(e.target[0].value);
+  };
+
   return (
     <div className="formContainer">
       <div className="formWrapper">
         <span className="logo">Convo</span>
         <span className="title">Register</span>
-        <form>
+        <form onSubmit={handleSubmit}>
           <input required type="text" placeholder="display name" />
           <input required type="email" placeholder="email" />
           <input required type="password" placeholder="password" />
