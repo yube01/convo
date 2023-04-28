@@ -1,10 +1,43 @@
 import { Link } from "react-router-dom";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth, storage } from "../firebase";
+import { useState } from "react";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 const Register = () => {
-  const handleSubmit = (e) => {
+  const [err, setErr] = useState(false);
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(e.target[0].value);
+    const displayName = e.target[0].value;
+    const email = e.target[1].value;
+    const password = e.target[2].value;
+    const file = e.target[3].value;
+
+    try {
+      const res = await createUserWithEmailAndPassword(auth, email, password);
+
+      // Upload file and metadata to the object 'images/mountains.jpg'
+      const storageRef = ref(storage, displayName);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+
+      // Listen for state changes, errors, and completion of the upload.
+      uploadTask.on(
+        (error) => {
+          setErr(true);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+            await updateProfile(res.user, {
+              displayName,
+              photoURL: downloadURL,
+            });
+          });
+        }
+      );
+    } catch (error) {
+      setErr(true);
+    }
   };
 
   return (
@@ -23,7 +56,9 @@ const Register = () => {
             </div>
             <span>Add an avatar</span>
           </label>
+
           <button>Sign up</button>
+          {err && <span>Something went wrong</span>}
         </form>
         <p>
           You do have an account? <Link to="/login">Login</Link>
