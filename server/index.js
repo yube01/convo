@@ -5,6 +5,8 @@ import cors from "cors";
 import helmet from "helmet";
 import dotenv from "dotenv";
 import { Configuration, OpenAIApi } from "openai";
+import openAiRoutes from "./routes/openai.js";
+
 dotenv.config();
 
 const app = express();
@@ -26,6 +28,10 @@ const configuration = new Configuration({
 });
 
 export const openai = new OpenAIApi(configuration);
+
+//middleware
+
+app.use("/openai", openAiRoutes);
 
 app.listen(3000, () => {
   console.log("server started!!!");
